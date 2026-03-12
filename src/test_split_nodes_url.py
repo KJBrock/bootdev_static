@@ -1,6 +1,6 @@
 import unittest
 from textnode import TextNode, TextType
-from split_nodes import split_nodes_image, split_nodes_link
+from split_nodes_url import split_nodes_image, split_nodes_link
 
 class TestSplitNodes(unittest.TestCase):
     def test_split_images(self):
@@ -35,5 +35,20 @@ class TestSplitNodes(unittest.TestCase):
                 TextNode("to youtube", TextType.LINK, "https://www.youtube.com/@bootdotdev"),
             ], 
             new_nodes)
+
+    def test_split_links_not_images(self):
+        test_node_list = [TextNode("This is text with a link ![image](https://i.imgur.com/zjjcJKZ.png) and [to youtube](https://www.youtube.com/@bootdotdev)",
+                                   TextType.TEXT)]
+        
+        new_nodes = split_nodes_link(test_node_list)
+        self.assertListEqual(
+            [
+                TextNode("This is text with a link ", TextType.TEXT),
+                TextNode("![image](https://i.imgur.com/zjjcJKZ.png)", TextType.TEXT),
+                TextNode(" and ", TextType.TEXT),
+                TextNode("to youtube", TextType.LINK, "https://www.youtube.com/@bootdotdev"),
+            ], 
+            new_nodes)
+
 
 
