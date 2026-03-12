@@ -1,9 +1,8 @@
 import re
-
-IMAGE_RE=r"!\[(.*?)\]\((http(s?):\/\/(\w+)((\.\w+)*)(\/[@?\w]+)*(\.\w+)?)\)"
+from my_regexes import *
 
 def extract_markdown_images(text):
     images = re.findall(IMAGE_RE, text)
-    print(f"extract images: ---> {images}")
+    match = re.match(IMAGE_RE, text)
     return [(image[0], image[1]) for image in images]
     
