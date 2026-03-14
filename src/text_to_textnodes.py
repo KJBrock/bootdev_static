@@ -1,6 +1,7 @@
 from textnode import TextNode, TextType
 from split_nodes_delimiter import split_nodes_delimiter
 from split_nodes_url import split_nodes_image, split_nodes_link
+from text_node_to_html_node import text_node_to_html_node
 
 DELIMITERS = {"**" : TextType.BOLD,
               "_" : TextType.ITALIC, 
@@ -11,8 +12,10 @@ def get_splitter(delimiter, text_type):
         return split_nodes_delimiter(node, delimiter, text_type)
     return splitter
 
-def text_to_textnodes(text):
+def text_to_textnodes(text, parse = True):
     node = TextNode(text, TextType.TEXT)
+    if not parse:
+        return [node]
     
     operations = []
     for (d, t) in DELIMITERS.items():

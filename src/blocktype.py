@@ -1,5 +1,6 @@
 from enum import Enum
 import re
+from my_regexes import *
 
 class BlockType(Enum):
     PARAGRAPH = "paragraph"
@@ -10,11 +11,11 @@ class BlockType(Enum):
     ORDERED_LIST = "ordered_list"
 
 REGEX_TO_BLOCK_TYPE = {
-    r"#{1,6} .*" : BlockType.HEADING,
-    r"```\n.*(\n.*)*```" : BlockType.CODE,
-    r"(^>[^\n]*)(\n>[^\n]*)*" : BlockType.QUOTE,
-    r"(^- [^\n]*)(\n- [^\n]*)" : BlockType.UNORDERED_LIST,
-    r"(^\d\. [^\n]*)(\n\d\. .*)*" : BlockType.ORDERED_LIST,    
+    HEADING_BLOCK_RE : BlockType.HEADING,
+    CODE_BLOCK_RE  : BlockType.CODE,
+    QUOTE_BLOCK_RE  : BlockType.QUOTE,
+    ULIST_BLOCK_RE  : BlockType.UNORDERED_LIST,
+    OLIST_BLOCK_RE  : BlockType.ORDERED_LIST, 
 }
     
 def block_to_block_type(text):
@@ -24,4 +25,5 @@ def block_to_block_type(text):
         if match is not None:
             block_type = REGEX_TO_BLOCK_TYPE[k]
             break
+
     return block_type
