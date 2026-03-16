@@ -33,8 +33,8 @@ def generate_page(from_path, template_path, dest_path, base_path):
     
     html_page = template.replace(title_placeholder, html_title)
     html_page = html_page.replace(content_placeholer, html_string)
-    html_page = html_page.replace('href="/', 'href="{basepath}')
-    html_page = html_page.replace('src="/', 'src="{basepath}')
+    html_page = html_page.replace('href="/', f"href=\"{base_path}")
+    html_page = html_page.replace('src="/', f"src=\"{base_path}")
 
     # Write the new full HTML page to a file at dest_path. Be sure to create any necessary directories if they don't exist.
     destdir = os.path.dirname(dest_path)
