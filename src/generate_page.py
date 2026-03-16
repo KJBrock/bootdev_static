@@ -4,7 +4,7 @@ from markdown_to_html import markdown_to_html_node
 from extract_title import extract_title
 from copy_recurse import create_dir_if_needed
         
-def generate_page(from_path, template_path, dest_path):
+def generate_page(from_path, template_path, dest_path, base_path):
     print(f"Generating page from {from_path} to {dest_path} using {template_path}")
 
     # Read the markdown file at from_path and store the contents in a variable.
@@ -33,6 +33,8 @@ def generate_page(from_path, template_path, dest_path):
     
     html_page = template.replace(title_placeholder, html_title)
     html_page = html_page.replace(content_placeholer, html_string)
+    html_page = html_page.replace('href="/', 'href="{basepath}')
+    html_page = html_page.replace('src="/', 'src="{basepath}')
 
     # Write the new full HTML page to a file at dest_path. Be sure to create any necessary directories if they don't exist.
     destdir = os.path.dirname(dest_path)
