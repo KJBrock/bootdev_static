@@ -66,3 +66,38 @@ the **same** even with inline stuff
             "<div><ol><li>This is list item #1</li><li>And this is list item #2</li><li>This list item has some <b>bold</b> text in it, and looks like we skipped some to check multi-digit entries.</li><li>And this has <b>bold</b> and <i>italic</i></li></ol></div>",
         )
 
+    def test_h1(self):
+        md = """
+# This is the title!
+
+1. This is list item #1
+2. And this is list item #2
+30. This list item has some **bold** text in it, and looks like we skipped some to check multi-digit entries.
+400. And this has **bold** and _italic_
+"""
+        node = markdown_to_html_node(md)
+        html = node.to_html()
+        self.assertEqual(
+            html,
+            "<div><h1>This is the title!</h1><ol><li>This is list item #1</li><li>And this is list item #2</li><li>This list item has some <b>bold</b> text in it, and looks like we skipped some to check multi-digit entries.</li><li>And this has <b>bold</b> and <i>italic</i></li></ol></div>",
+        )
+
+    def test_blockquote(self):
+        md = """
+> "I am in fact a Hobbit in all but size."
+>
+> -- J.R.R. Tolkien
+"""
+        node = markdown_to_html_node(md)
+        html = node.to_html()
+        print("============ HTML ")
+        print(f"{html}")
+        print("============ Expected")
+        print("<div><blockquote>\"I am in fact a Hobbit in all but size.\" -- J.R.R. Tolkien</blockquote></div>")
+        print("===================")
+
+        self.assertEqual(
+            html,
+            "<div><blockquote>\"I am in fact a Hobbit in all but size.\" -- J.R.R. Tolkien</blockquote></div>",
+        )
+

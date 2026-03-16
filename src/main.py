@@ -1,8 +1,14 @@
-from textnode import *
+from copy_recurse import copy_recurse
+from generate_pages_recursive import generate_pages_recursive
 
-print("hello world")
+def main():
+    print("--> main()")
+    
+    print("----> copying static files")
+    copy_recurse("static", "public")
 
-node = TextNode("Some filler text here", TextType.LINK, "http://localhost:8889")
+    print("----> generating web pages")
+    generate_pages_recursive("content", "template.html", "public")
 
-print(f"{node}")
-
+if __name__ == "__main__":
+    main()

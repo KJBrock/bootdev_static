@@ -4,7 +4,9 @@ IMAGE_RE = r"!\[(.*?)\]\((.*?)\)"
 # Link needs to explicitly exclude the !, otherwise is would also match the image link
 LINK_RE  = r"(?<![!])\[(.*?)\]\((.*?)\)" 
 
-HEADING_COUNT_REGEX = r"(#{1,6})"
+TITLE_MATCH_REGEX = r"(?:^|\n)# ([^\n]*)"
+
+HEADING_COUNT_REGEX = r"(#{1,6} )"
 OLIST_PREFIX_LEN_REGEX = r"(\d+\. )"
 
 HEADING_BLOCK_RE = r"#{1,6} .*"

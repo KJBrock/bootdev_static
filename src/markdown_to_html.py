@@ -28,7 +28,7 @@ def md_block_to_html(md_block, block_type):
             header_block = md_block[header_count:] # Strip off the '#' characters and the space
                     
             html_children = [text_node_to_html_node(node) for node in text_to_textnodes(header_block)]
-            html_node = ParentNode(f"h{header_count}", html_children)
+            html_node = ParentNode(f"h{header_count-1}", html_children)
             html_nodes.append(html_node)                
             
         case BlockType.CODE:
@@ -40,14 +40,8 @@ def md_block_to_html(md_block, block_type):
             
         case BlockType.QUOTE:
             lines = md_block.split("\n")
-            html_children = []
-            for line in lines:
-                stripped = line[1:].strip() # skip the leading \n
-                if len(stripped) > 0:
-                    p_children = [text_node_to_html_node(node) for node in text_to_textnodes(stripped)]
-                    paragraph = ParentNode("p", p_children)
-                    html_children.append(paragraph) 
-
+            quote_text = " ".join([l[1:].strip() for l in lines if len(l) > 1])
+            html_children = [text_node_to_html_node(node) for node in text_to_textnodes(quote_text)]
             html_node = ParentNode(f"blockquote", html_children)
             html_nodes.append(html_node)                
             
